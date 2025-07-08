@@ -3,41 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>PS4 GoldHEN Injector</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1e1e2f;
-      color: #f1f1f1;
-      text-align: center;
-      padding-top: 50px;
-    }
-    button {
-      padding: 15px 30px;
-      font-size: 16px;
-      background-color: #00bfa5;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 8px;
-    }
-    button:hover {
-      background-color: #008e76;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <script>
     function injectPayload() {
       let ip = prompt("Enter your PS4 IP address (e.g. 192.168.0.100):");
       if (!ip) return alert("No IP entered.");
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "http://" + ip + ":9090", true);
-      xhr.send(); // Payload should already be loaded in BinLoader
-      alert("Payload sent! Check your.");
+      xhr.send(); // You must have BinLoader waiting on your PS4
+      alert("Payload sent! Check your PS4.");
+    }
+
+    // Register service worker for offline cache
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(() => console.log('Service Worker registered!'))
+          .catch(err => console.error('Service Worker registration failed:', err));
+      });
     }
   </script>
 </head>
 <body>
   <h1>🎮 PS4 GoldHEN Injector</h1>
-  <p>Make sure your BinLoader is running before clicking Inject.</p>
+  <p>This site caches for offline use. Visit once online, then launch locally from your PS4!</p>
   <button onclick="injectPayload()">Inject GoldHEN</button>
 </body>
 </html>
